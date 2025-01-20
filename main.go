@@ -1,12 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"net/http"
+	"strconv"
+
+	"github.com/AyanDas-99/blog/db"
 	"github.com/AyanDas-99/blog/post"
 	"github.com/AyanDas-99/blog/user"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"strconv"
 )
 
 type Blog struct {
@@ -35,6 +38,8 @@ func blogList(count int) []Blog {
 	return blogs
 }
 
+var DB sql.DB
+
 func main() {
 	router := gin.Default()
 	router.GET("/user", getUsers)
@@ -46,9 +51,7 @@ func main() {
 	router.GET("/post/:id", getPostById)
 	router.PUT("/post", addPost)
 	router.DELETE("/post/:id", deletePost)
-	user.InitDb()
-	post.InitDb()
-
+	db.InitDb()
 	router.Run("localhost:8080")
 
 }

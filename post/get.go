@@ -1,8 +1,10 @@
 package post
 
+import "github.com/AyanDas-99/blog/db"
+
 func GetPosts() ([]Post, error) {
 
-	rows, err := DB.Query(`SELECT id, author, content, created_at FROM posts`) // check err
+	rows, err := db.DB.Query(`SELECT id, author, content, created_at FROM posts`) // check err
 	defer rows.Close()
 
 	var posts []Post
@@ -19,6 +21,6 @@ func GetPosts() ([]Post, error) {
 
 func GetPostById(id string) (Post, error) {
 	var p Post
-	err := DB.QueryRow(`SELECT id, author, content, created_at FROM posts WHERE id=?`, id).Scan(&p.Id, &p.Author, &p.Content, &p.CreatedAt)
+	err := db.DB.QueryRow(`SELECT id, author, content, created_at FROM posts WHERE id=?`, id).Scan(&p.Id, &p.Author, &p.Content, &p.CreatedAt)
 	return p, err
 }

@@ -1,8 +1,12 @@
 package user
 
+import (
+	"github.com/AyanDas-99/blog/db"
+)
+
 func GetUsers() ([]User, error) {
 
-	rows, err := DB.Query(`SELECT id, username, password, created_at FROM users`) // check err
+	rows, err := db.DB.Query(`SELECT id, username, password, created_at FROM users`) // check err
 	defer rows.Close()
 
 	var users []User
@@ -19,6 +23,6 @@ func GetUsers() ([]User, error) {
 
 func GetUserById(id string) (User, error) {
 	var u User
-	err := DB.QueryRow(`SELECT id, username, password, created_at FROM users WHERE id=?`, id).Scan(&u.Id, &u.Username, &u.Password, &u.CreatedAt)
+	err := db.DB.QueryRow(`SELECT id, username, password, created_at FROM users WHERE id=?`, id).Scan(&u.Id, &u.Username, &u.Password, &u.CreatedAt)
 	return u, err
 }
